@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">hping2</string>
+    <string name="helpMenuTitle">Help</string>
+    <string name="aboutMenuTitle">About</string>
 </resources>

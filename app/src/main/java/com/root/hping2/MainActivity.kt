@@ -1,8 +1,9 @@
 package com.root.hping2
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import android.view.View
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,8 +11,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //var helpButtonActivity = findViewById<Button>(R.id.HelpButton)
+
+        //helpButtonActivity.
+
+
         // Example of a call to a native method
-        sample_text.text = stringFromJNI()
+        //sample_text.text = stringFromJNI()
     }
 
     /**
@@ -26,5 +32,23 @@ class MainActivity : AppCompatActivity() {
         init {
             System.loadLibrary("native-lib")
         }
+    }
+
+    fun openHelpScreen(view: View)
+    {
+        val intent = Intent(this, HelpScreenActivity::class.java).apply{
+
+        }
+        startActivity(intent)
+
+    }
+
+    fun openAboutScreen(view: View)
+    {
+        val intent = Intent(this, AboutActivity::class.java).apply{
+
+        }
+        startActivity(intent)
+
     }
 }
