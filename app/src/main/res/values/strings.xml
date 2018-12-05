@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">hping2</string>
+    <string name="settingsMenuTitle">Settings</string>
     <string name="helpMenuTitle">Help</string>
     <string name="aboutMenuTitle">About</string>
+    <string name="scanMenuTitle">Scan</string>
 </resources>

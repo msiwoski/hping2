@@ -34,6 +34,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun openScanScreen(view: View)
+    {
+        val intent = Intent(this, ScanActivity::class.java).apply{
+
+        }
+        startActivity(intent)
+
+    }
+
+    fun openSettingsScreen(view: View)
+    {
+        val intent = Intent(this, SettingsScreenActivity::class.java).apply{
+
+        }
+        startActivity(intent)
+
+    }
+
     fun openHelpScreen(view: View)
     {
         val intent = Intent(this, HelpScreenActivity::class.java).apply{
