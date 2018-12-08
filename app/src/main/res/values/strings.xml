@@ -4,4 +4,5 @@
     <string name="helpMenuTitle">Help</string>
     <string name="aboutMenuTitle">About</string>
     <string name="scanMenuTitle">Scan</string>
+    <string name="startButton">Start</string>
 </resources>

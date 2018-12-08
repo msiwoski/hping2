@@ -20,6 +20,7 @@
         android:text="@string/helpMenuTitle"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:textAlignment="center"
         android:clickable="false"
         android:cursorVisible="false"
         android:focusable="false"

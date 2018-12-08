@@ -10,14 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //var helpButtonActivity = findViewById<Button>(R.id.HelpButton)
-
-        //helpButtonActivity.
-
-
-        // Example of a call to a native method
-        //sample_text.text = stringFromJNI()
     }
 
     /**
@@ -34,14 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun openScanScreen(view: View)
-    {
-        val intent = Intent(this, ScanActivity::class.java).apply{
 
-        }
-        startActivity(intent)
-
-    }
 
     fun openSettingsScreen(view: View)
     {
