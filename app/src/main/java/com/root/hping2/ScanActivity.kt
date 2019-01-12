@@ -13,17 +13,22 @@ class ScanActivity : AppCompatActivity() {
 
         var bundle = getIntent().extras.getBundle("IPBundle")
         var ipAddress:String = ""
-        if(bundle != null)
-        {
-            if(!bundle.getString("IPAddress").isNullOrEmpty())
-            {
+        var portNumber:String = ""
+        var protocol:String = ""
+        if(bundle != null) {
+            if (!bundle.getString("IPAddress").isNullOrEmpty()) {
                 ipAddress = bundle.getString(("IPAddress"))
             }
+            if (!bundle.getString("PortNumber").isNullOrEmpty()) {
+                portNumber = bundle.getString("PortNumber")
+            }
+            if (!bundle.getString("Protocol").isNullOrEmpty()) {
+                protocol = bundle.getString("Protocol")
+            }
         }
-
         var textView = TextView(this)
         textView.textSize = 40f
-        textView.setText(ipAddress)
+        textView.setText("Ip:" + ipAddress  + " Port:" + portNumber + "Protocol" + protocol)
 
         // Set the text view as the activity layout
         setContentView(textView)

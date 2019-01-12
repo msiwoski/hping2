@@ -11,9 +11,9 @@
         android:labelFor="@+id/PortNumber"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:digits="0123456789."
         android:ems="10"
         android:hint="@string/Port"
@@ -81,9 +81,9 @@
         android:labelFor="@+id/Protocol"
         android:layout_width="100dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="76dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@null"
         android:clickable="false"
@@ -104,6 +104,7 @@
 
 
     <RadioGroup
+        android:id="@+id/ProtocolGroup"
         android:layout_width="300dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"

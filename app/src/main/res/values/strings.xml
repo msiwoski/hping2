@@ -5,4 +5,9 @@
     <string name="aboutMenuTitle">About</string>
     <string name="scanMenuTitle">Scan</string>
     <string name="startButton">Start</string>
+    <string name="IPAddress">IP Address</string>
+    <string name="Port">Port Number</string>
+    <string name="Protocol">Protocol</string>
+    <string name="TCP">TCP</string>
+    <string name="UDP">UDP</string>
 </resources>

@@ -8,15 +8,26 @@ import android.view.View
 import android.widget.EditText
 import com.root.hping2.R.id.IPAddress
 import com.root.hping2.R.id.PortNumber
+import com.root.hping2.R.id.ProtocolGroup
+import com.root.hping2.main
 
 import android.content.Intent
 import android.widget.Button
+import android.widget.RadioButton
+import android.widget.RadioGroup
+
+
 
 
 class SettingsScreenActivity : AppCompatActivity() {
 
     private lateinit var ipAddress:EditText
     private lateinit var host:EditText
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var TCPRadioButton: RadioButton
+    private lateinit var UDPRadioButton: RadioButton
+    private lateinit var ProtocolChoice: String
+    private val main = main()
     //private lateinit var btn:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +36,14 @@ class SettingsScreenActivity : AppCompatActivity() {
         //btn = findViewById<Button>(com.root.hping2.R.id.ScanButton)
         ipAddress = findViewById<EditText>(IPAddress)
         host = findViewById<EditText>(PortNumber)
+        radioGroup = findViewById(ProtocolGroup)
+        TCPRadioButton = findViewById(R.id.TCPRadioButton)
+        UDPRadioButton = findViewById(R.id.UDPRadioButton)
+        //radioGroup.addView(TCPRadioButton)
+        radioGroup.check(TCPRadioButton.id)
+        ProtocolChoice = "TCP"
+        //radioGroup.addView(UDPRadioButton)
+
 
         ipAddress.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -48,6 +67,14 @@ class SettingsScreenActivity : AppCompatActivity() {
 //                host.setText(s)
             }
         })
+
+        radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
+            if (i == R.id.TCPRadioButton) {
+                ProtocolChoice = "TCP"
+            } else {
+                ProtocolChoice = "UDP"
+            }
+        }))
     }
 
     fun startButton(view: View)
@@ -56,8 +83,13 @@ class SettingsScreenActivity : AppCompatActivity() {
         val ipBundle = Bundle()
         ipBundle.putString("IPAddress", ipAddress.text.toString())
         ipBundle.putString("PortNumber", host.text.toString())
+        ipBundle.putString("Protocol", ProtocolChoice)
         intent.putExtra("IPBundle", ipBundle)
+
+        main.callMainFromJNI("test")
+
+        //main.callMainFromJNI(ipAddress.text.toString())
+
         startActivity(intent)
     }
-
 }
