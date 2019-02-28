@@ -14,6 +14,7 @@
 #include <android/log.h>
 
 #include "hping2.h"
+#include "Main.h"
 
 /* globals */
 unsigned int
@@ -171,6 +172,45 @@ extern "C" JNIEXPORT void JNICALL Java_com_root_hping2_SettingsScreenActivity_ca
     delete [] argv;
 }*/
 
+static JavaVM* vm_reference;
+
+typedef int(*printfunc)(char const*, ...);
+static printfunc print;
+void setprintfunc(printfunc func)
+{
+    print = func;
+}
+
+int ktprint(char const* format, ...)
+{
+    static char huge_buf[8192] = {0};
+
+    int printed;
+    va_list ap;
+    va_start(ap, format);
+    printed = vsnprintf(huge_buf, sizeof(huge_buf), format, ap);
+    va_end(ap);
+
+    JNIEnv* env;
+    if ((*vm_reference)->GetEnv(vm_reference, (void**)(&env), JNI_VERSION_1_6) != JNI_OK) {
+        return -1;
+    }
+
+    jstring test = (*env)->NewStringUTF(env, huge_buf);
+    jclass system_class = (*env)->FindClass(env, "java/lang/System");
+    jfieldID out_id = (*env)->GetStaticFieldID(env, system_class, "out", "Ljava/io/PrintStream;");
+
+    jclass print_stream_class = (*env)->FindClass(env, "java/io/PrintStream");
+    jobject print_stream = (*env)->GetStaticObjectField(env, system_class, out_id);
+    jmethodID print_method_id = (*env)->GetMethodID(env, print_stream_class, "print", "(Ljava/lang/String;)V");
+    jmethodID flush_method_id = (*env)->GetMethodID(env, print_stream_class, "flush", "()V");
+
+    (*env)->CallVoidMethod(env, print_stream, print_method_id, test);
+    (*env)->CallVoidMethod(env, print_stream, flush_method_id);
+
+    return printed;
+}
+
 JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
 {
     __android_log_print(ANDROID_LOG_INFO,  __FUNCTION__, "onLoad");
@@ -179,26 +219,53 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
         return -1;
     }
 
+    vm_reference = vm;
+
     // Get jclass with env->FindClass.
     // Register methods with env->RegisterNatives.
+
+    setprintfunc(ktprint);
 
     return JNI_VERSION_1_6;
 }
 
-JNIEXPORT void JNICALL Java_com_root_hping2_main_callMainFromJNI(JNIEnv *env, jobject pThis, jstring argument){
+JNIEXPORT void JNICALL Java_com_root_hping2_Main_callMainFromJNI(JNIEnv *env, jobject pThis ){ //, jstring argument){
 
+
+    printf("Size of char: %ld byte\n",sizeof(char));
+    return;
+
+}
+
+JNIEXPORT void JNICALL Java_com_root_hping2_Main_callMainFromJNI2(JNIEnv *env, jobject pThis, jchar pChar){ //, jstring argument){
+
+
+    printf("Size of char: %ld byte\n",sizeof(pChar));
+    return;
+
+}
+JNIEXPORT void JNICALL Java_com_root_hping2_Main_callMainFromJNI3(JNIEnv *env, jobject pThis, jcharArray aChar){ //, jstring argument){
+
+    jsize len = (*env)->GetArrayLength(env, aChar);
+    jchar *body = (*env)->GetCharArrayElements(env, aChar, 0);
+
+    (*env)->ReleaseCharArrayElements(env, aChar, body, 0);
+
+
+    return;
+
+}
+
+JNIEXPORT void JNICALL Java_com_root_hping2_Main_callMainFromJNI4(JNIEnv *env, jobject pThis, jstring prompt){ //, jstring argument){
     char buf[128];
-    const char *str = (*env)->GetStringUTFChars(env, argument, 0);
-    printf("%s", str);
-    (*env)->ReleaseStringUTFChars(env, argument, str);
-
+    const char* chars = (*env)->GetStringUTFChars(env, prompt, NULL);
+    print("%s", chars);
+    (*env)->ReleaseStringUTFChars(env, prompt, chars);
 }
 
-
-
-int main(int argc, char **argv) {
-    char setflags[1024] = {'\0'};
-    int c, hdr_size;
-
-
-}
+//int main(int argc, char **argv) {
+//    char setflags[1024] = {'\0'};
+//    int c, hdr_size;
+//
+//
+//}

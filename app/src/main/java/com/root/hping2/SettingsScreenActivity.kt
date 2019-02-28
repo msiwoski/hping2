@@ -9,14 +9,15 @@ import android.widget.EditText
 import com.root.hping2.R.id.IPAddress
 import com.root.hping2.R.id.PortNumber
 import com.root.hping2.R.id.ProtocolGroup
-import com.root.hping2.main
+import com.root.hping2.Main
 
 import android.content.Intent
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
-
-
+import java.io.PipedOutputStream
+import java.io.PipedInputStream
+import java.io.PrintStream
 
 
 class SettingsScreenActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var TCPRadioButton: RadioButton
     private lateinit var UDPRadioButton: RadioButton
     private lateinit var ProtocolChoice: String
-    private val main = main()
+    private val MainCPP = Main()
     //private lateinit var btn:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,8 +86,23 @@ class SettingsScreenActivity : AppCompatActivity() {
         ipBundle.putString("PortNumber", host.text.toString())
         ipBundle.putString("Protocol", ProtocolChoice)
         intent.putExtra("IPBundle", ipBundle)
+        val ipAddress2 = ipAddress.text.toString()
 
-        main.callMainFromJNI("test")
+
+        //MainCPP.callMainFromJNI()
+
+        //MainCPP.callMainFromJNI3(ipAddress2.toCharArray())
+        System.out.println("test")
+//        val pipeOut = PipedOutputStream()
+//        val printStream = PrintStream(pipeOut)
+//        val pipeIn = PipedInputStream(pipeOut)
+//        System.setOut(printStream)
+        MainCPP.callMainFromJNI4(ProtocolChoice)
+//        printStream.flush()
+//        pipeIn.read()
+
+
+
 
         //main.callMainFromJNI(ipAddress.text.toString())
 
