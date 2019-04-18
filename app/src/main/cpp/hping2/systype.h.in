@@ -1,0 +1,6 @@
+#ifndef __SYSTYPE_H
+#define __SYSTYPE_H
+
+#define OSTYPE_@CONFIG_OS_TYPE@
+
+#endif /* SYSTYPE_H */

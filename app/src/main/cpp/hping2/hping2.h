@@ -255,14 +255,14 @@ typedef unsigned int           u_int32_t;
  * IP header
  */
 struct myiphdr {
-#if defined(__LITTLE_ENDIAN_BITFIELD)
+#if defined(__LITTLE_ENDIAN__)
         __u8    ihl:4,
                 version:4;
-#elif defined (__BIG_ENDIAN_BITFIELD)
+#elif defined(__BIG_ENDIAN__)
         __u8    version:4,
                 ihl:4;
 #else
-#error  "Please, edit Makefile and add -D__(LITTLE|BIG)_ENDIAN_BITFIEND"
+#error  "Please, edit Makefile and add -D__(LITTLE|BIG)_ENDIAN__"
 #endif
         __u8    tos;
         __u16   tot_len;
@@ -294,14 +294,14 @@ struct mytcphdr {
 	__u16	th_dport;               /* destination port */
 	__u32	th_seq;                 /* sequence number */
 	__u32	th_ack;                 /* acknowledgement number */
-#if defined (__LITTLE_ENDIAN_BITFIELD)
+#if defined (__LITTLE_ENDIAN__)
 	__u8    th_x2:4,                /* (unused) */
 		th_off:4;               /* data offset */
-#elif defined (__BIG_ENDIAN_BITFIELD)
+#elif defined (__BIG_ENDIAN__)
 	__u8    th_off:4,               /* data offset */
 		th_x2:4;                /* (unused) */
 #else
-#error  "Please, edit Makefile and add -D__(LITTLE|BIG)_ENDIAN_BITFIEND"
+#error  "Please, edit Makefile and add -D__(LITTLE|BIG)_ENDIAN__"
 #endif
 	__u8    th_flags;
 	__u16   th_win;                 /* window */
@@ -426,5 +426,9 @@ size_t strlcpy(char *dst, const char *src, size_t siz);
 
 /* ARS glue */
 void hping_ars_send(char *s);
+
+int hping2(int argc, char** argv);
+
+int ktprint(char const* format, ...);
 
 #endif /* _HPING2_H */
