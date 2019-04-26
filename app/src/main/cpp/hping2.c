@@ -56,7 +56,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved)
     return JNI_VERSION_1_6;
 }
 
-JNIEXPORT void JNICALL Java_com_root_hping2_Hping2_00024Companion_invokeHping2 (JNIEnv * env, jobject thiz, jobjectArray jargv)
+JNIEXPORT jint JNICALL Java_com_root_hping2_Hping2_00024Companion_invokeHping2 (JNIEnv * env, jobject thiz, jobjectArray jargv)
 {
     jsize jargc = (*env)->GetArrayLength(env, jargv);
     char** argv = malloc(sizeof(char*) * jargc);
@@ -71,11 +71,13 @@ JNIEXPORT void JNICALL Java_com_root_hping2_Hping2_00024Companion_invokeHping2 (
         argv[i] = utfstr;
     }
 
-    hping2(jargc, argv);
+    int hping2Result = hping2(jargc, argv);
 
     for (jsize i = 0; i < jargc; ++i)
     {
         free(argv[i]);
     }
     free(argv);
+
+    return hping2Result;
 }

@@ -86,8 +86,11 @@ class SettingsScreenActivity : AppCompatActivity() {
         ipBundle.putString("PortNumber", host.text.toString())
         ipBundle.putString("Protocol", ProtocolChoice)
         intent.putExtra("IPBundle", ipBundle)
+        var hpingResult = 0
 
-        Hping2.invokeHping2(arrayOf("hping2", "--version"));
+        while(hpingResult == 0) {
+            hpingResult = Hping2.invokeHping2(arrayOf("hping2", "192.168.0.17"))//, "--version"))
+        }
 
         startActivity(intent)
     }

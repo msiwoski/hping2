@@ -13,7 +13,7 @@ extern "C" {
  * Method:    invokeHping2
  * Signature: ([Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_root_hping2_Hping2_00024Companion_invokeHping2
+JNIEXPORT jint JNICALL Java_com_root_hping2_Hping2_00024Companion_invokeHping2
         (JNIEnv *, jobject, jobjectArray);
 #ifdef __cplusplus
 }

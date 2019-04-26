@@ -169,9 +169,10 @@ int hping2(int argc, char **argv)
 	int c, hdr_size;
 
 	if (parse_options(argc, argv) == -1) {
-		printf("hping2: missing host argument\n"
+        ktprint("hping2: missing host argument\n"
 			"Try `hping2 --help' for more information.\n");
-		exit(1);
+        return 0;
+		//exit(1);
 	}
 
 	/* reverse sign */
@@ -199,19 +200,20 @@ int hping2(int argc, char **argv)
 
 	/* get interface's name and address */
 	if ( get_if_name() == -1 ) {
-		printf("[main] no such device\n");
-		exit(1);
+		ktprint("[main] no such device\n");
+		return 0;
+		//exit(1);
 	}
 
 	if (opt_verbose || opt_debug) {
-		printf("using %s, addr: %s, MTU: %d\n",
+		ktprint("using %s, addr: %s, MTU: %d\n",
 			ifname, ifstraddr, h_if_mtu);
 	}
 
 	/* open raw socket */
 	sockraw = open_sockraw();
 	if (sockraw == -1) {
-		printf("[main] can't open raw socket\n");
+		ktprint("[main] can't open raw socket\n");
 		exit(1);
 	}
 

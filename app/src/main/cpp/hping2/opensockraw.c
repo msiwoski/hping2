@@ -12,6 +12,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h> /* IPPROTO_RAW def. */
+#include <string.h>
+#include <errno.h>
+#include "hping2.h"
 
 int open_sockraw()
 {
@@ -19,7 +22,7 @@ int open_sockraw()
 
 	s = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
 	if (s == -1) {
-		perror("[open_sockraw] socket()");
+		ktprint("[open_sockraw] socket(): %s\n", strerror(errno));
 		return -1;
 	}
 

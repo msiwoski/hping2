@@ -7,6 +7,6 @@ class Hping2 {
             System.loadLibrary("hping2glue")
         }
 
-        external fun invokeHping2(commandLine: Array<String>)
+        external fun invokeHping2(commandLine: Array<String>): Int
     }
 }
