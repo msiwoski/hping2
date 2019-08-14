@@ -16,11 +16,12 @@
 
 void show_version(void)
 {
-	ktprint("hping version %s (%s)\n", RELEASE_VERSION, RELEASE_DATE);
+	printf("hping version %s (%s)\n", RELEASE_VERSION, RELEASE_DATE);
 #if (!defined OSTYPE_LINUX) || (defined FORCE_LIBPCAP)
 	printf("libpcap based binary\n");
 #else
-	ktprint("linux sockpacket based binary\n");
+	printf("linux sockpacket based binary\n");
 #endif /* !OSTYPE_LINUX || FORCE_LIBPCAP */
+	exit(0);
 }
 

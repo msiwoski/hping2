@@ -38,7 +38,6 @@ static int strinitcmp(char *a, char *b);
 
 int antigetopt(int argc, char **argv, struct ago_optlist *list)
 {
-	char** argv_start = argv;
 	static char **save_argv = NULL;
 	static char *chain = NULL;
 	static int endoptions = 0;
@@ -83,13 +82,13 @@ chain_start:
 	argv = save_argv;
 
 	/* handle the "--" special option */
-	if (((argv - argv_start) < argc) && *argv && strcmp(*argv, "--") == 0) {
+	if (*argv && strcmp(*argv, "--") == 0) {
 		endoptions = 1;
 		argv++;
 		save_argv++;
 	}
 
-	while(((argv - argv_start) < argc) && *argv) {
+	while(*argv) {
 		/* The option must start with '-' */
 		if (!endoptions && argv[0][0] == '-' && argv[0][1] != '\0') {
 			int amb;

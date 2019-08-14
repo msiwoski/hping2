@@ -427,8 +427,4 @@ size_t strlcpy(char *dst, const char *src, size_t siz);
 /* ARS glue */
 void hping_ars_send(char *s);
 
-int hping2(int argc, char** argv);
-
-int ktprint(char const* format, ...);
-
 #endif /* _HPING2_H */

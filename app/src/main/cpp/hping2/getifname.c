@@ -59,16 +59,16 @@ int get_if_name(void)
 		if (get_output_if(&remote, &output_if_addr) == 0) {
 			known_output_if = 1;
 			if (opt_debug)
-				ktprint("DEBUG: Output interface address: %s\n",
+				printf("DEBUG: Output interface address: %s\n",
 					inet_ntoa(sa.sin_addr));
 		} else {
-			ktprint(stderr, "Warning: Unable to guess the output "
+			fprintf(stderr, "Warning: Unable to guess the output "
 					"interface\n");
 		}
 	}
 
 	if ( (fd = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
-		ktprint("[get_if_name] socket(AF_INET, SOCK_DGRAM, 0)");
+		perror("[get_if_name] socket(AF_INET, SOCK_DGRAM, 0)");
 		return -1;
 	}
 
@@ -79,7 +79,7 @@ int get_if_name(void)
 	/* gets interfaces list */
 	if ( ioctl(fd, SIOCGIFCONF, (char*)&ifc) == -1 ||
 	     ifc.ifc_len < sizeof(struct ifreq)		) {
-		ktprint("[get_if_name] ioctl(SIOCGIFCONF)");
+		perror("[get_if_name] ioctl(SIOCGIFCONF)");
 		close(fd);
 		return -1;
 	}
@@ -93,25 +93,25 @@ int get_if_name(void)
 
 		if ( ioctl(fd, SIOCGIFFLAGS, (char*)&ifr) == -1) {
 			if (opt_debug)
-				ktprint("DEBUG: [get_if_name] ioctl(SIOCGIFFLAGS)");
+				perror("DEBUG: [get_if_name] ioctl(SIOCGIFFLAGS)");
 			continue;
 		}
 
 		if (opt_debug)
-			ktprint("DEBUG: if %s: ", ifr.ifr_name);
+			printf("DEBUG: if %s: ", ifr.ifr_name);
 
 		/* Down interface? */
 		if ( !(ifr.ifr_flags & IFF_UP) )
 		{
 			if (opt_debug)
-				ktprint("DOWN\n");
+				printf("DOWN\n");
 			continue;
 		}
 
 		if (known_output_if) {
 			/* Get the interface address */
 			if (ioctl(fd, SIOCGIFADDR, (char*)&ifr) == -1) {
-				ktprint("[get_if_name] ioctl(SIOCGIFADDR)");
+				perror("[get_if_name] ioctl(SIOCGIFADDR)");
 				continue;
 			}
 			/* Copy it */
@@ -121,12 +121,12 @@ int get_if_name(void)
 			if (sa.sin_addr.s_addr !=
 			    output_if_addr.sin_addr.s_addr) {
 				if (opt_debug)
-					ktprint("The address doesn't match\n");
+					printf("The address doesn't match\n");
 				continue;
 			}
 		} else if (ifname[0] != '\0' && !strstr(ifr.ifr_name, ifname)) {
 			if (opt_debug)
-				ktprint("Don't Match (but seems to be UP)\n");
+				printf("Don't Match (but seems to be UP)\n");
 			continue;
 		}
 
@@ -138,7 +138,7 @@ int get_if_name(void)
 
 		/* get if address */
 		if ( ioctl(fd, SIOCGIFADDR, (char*)&ifr) == -1) {
-			ktprint("DEBUG: [get_if_name] ioctl(SIOCGIFADDR)");
+			perror("DEBUG: [get_if_name] ioctl(SIOCGIFADDR)");
 			exit(1);
 		}
 
@@ -149,8 +149,8 @@ int get_if_name(void)
 
 		/* get if mtu */
 		if ( ioctl(fd, SIOCGIFMTU, (char*)&ifr) == -1) {
-			ktprint("Warning: [get_if_name] ioctl(SIOCGIFMTU)");
-			ktprint(stderr, "Using a fixed MTU of 1500\n");
+			perror("Warning: [get_if_name] ioctl(SIOCGIFMTU)");
+			fprintf(stderr, "Using a fixed MTU of 1500\n");
 			h_if_mtu = 1500;
 		}
 		else
@@ -323,20 +323,11 @@ int get_output_if(struct sockaddr_in *dest, struct sockaddr_in *ifip)
 	memset(&iface_out, 0, sizeof(iface_out));
 	sock_rt = socket(AF_INET, SOCK_DGRAM, 0 );
 
-
-    if (sock_rt < 0)
-    {
-        ktprint("Socket failed: %s\n", strerror(errno));
-        return 0;
-    }
-
-
-
-    dest->sin_port = htons(11111);
+	dest->sin_port = htons(11111);
 	if (setsockopt(sock_rt, SOL_SOCKET, SO_BROADCAST, &on, sizeof(on))
             == -1) {
 		if (opt_debug)
-			ktprint("DEBUG: [get_output_if] setsockopt(SOL_SOCKET, "
+			perror("DEBUG: [get_output_if] setsockopt(SOL_SOCKET, "
 			       "SO_BROADCAST");
 		close(sock_rt);
 		return -1;
@@ -345,7 +336,7 @@ int get_output_if(struct sockaddr_in *dest, struct sockaddr_in *ifip)
 	if (connect(sock_rt, (struct sockaddr*)dest, sizeof(struct sockaddr_in))
 	    == -1 ) {
 		if (opt_debug)
-			ktprint("DEBUG: [get_output_if] connect");
+			perror("DEBUG: [get_output_if] connect");
 		close(sock_rt);
 		return -1;
 	}
@@ -353,7 +344,7 @@ int get_output_if(struct sockaddr_in *dest, struct sockaddr_in *ifip)
 	len = sizeof(iface_out);
 	if (getsockname(sock_rt, (struct sockaddr *)&iface_out, &len) == -1 ) {
 		if (opt_debug)
-			ktprint("DEBUG: [get_output_if] getsockname");
+			perror("DEBUG: [get_output_if] getsockname");
 		close(sock_rt);
 		return -1;
 	}

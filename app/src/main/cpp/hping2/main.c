@@ -29,6 +29,10 @@
 
 #include "hping2.h"
 
+#if (!defined OSTYPE_LINUX) || (defined FORCE_LIBPCAP)
+#include <pcap.h>
+#endif /* ! OSTYPE_LINUX || FORCE_LIBPCAP */
+
 /* globals */
 unsigned int
 	tcp_th_flags = 0,
@@ -163,16 +167,22 @@ volatile struct delaytable_element delaytable[TABLESIZE];
 struct hcmphdr *hcmphdr_p; /* global pointer used by send_hcmp to transfer
 			      hcmp headers to data_handler */
 
-int hping2(int argc, char **argv)
+#if (!defined OSTYPE_LINUX) || (defined FORCE_LIBPCAP)
+pcap_t *pcapfp;
+char errbuf[PCAP_ERRBUF_SIZE];
+struct pcap_pkthdr hdr;
+#endif /* ! OSTYPE_LINUX || FORCE_LIBPCAP */
+
+/* main */
+int main(int argc, char **argv)
 {
 	char setflags[1024] = {'\0'};
 	int c, hdr_size;
 
 	if (parse_options(argc, argv) == -1) {
-        ktprint("hping2: missing host argument\n"
+		printf("hping2: missing host argument\n"
 			"Try `hping2 --help' for more information.\n");
-        return 0;
-		//exit(1);
+		exit(1);
 	}
 
 	/* reverse sign */
@@ -200,20 +210,19 @@ int hping2(int argc, char **argv)
 
 	/* get interface's name and address */
 	if ( get_if_name() == -1 ) {
-		ktprint("[main] no such device\n");
-		return 0;
-		//exit(1);
+		printf("[main] no such device\n");
+		exit(1);
 	}
 
 	if (opt_verbose || opt_debug) {
-		ktprint("using %s, addr: %s, MTU: %d\n",
+		printf("using %s, addr: %s, MTU: %d\n",
 			ifname, ifstraddr, h_if_mtu);
 	}
 
 	/* open raw socket */
 	sockraw = open_sockraw();
 	if (sockraw == -1) {
-		ktprint("[main] can't open raw socket\n");
+		printf("[main] can't open raw socket\n");
 		exit(1);
 	}
 

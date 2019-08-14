@@ -8,17 +8,14 @@ import android.view.View
 import android.widget.EditText
 import com.root.hping2.R.id.IPAddress
 import com.root.hping2.R.id.PortNumber
-import com.root.hping2.R.id.ProtocolGroup
-import com.root.hping2.Hping2
 
 import android.content.Intent
-import android.widget.Button
+import android.content.pm.PackageManager
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import java.io.PipedOutputStream
-import java.io.PipedInputStream
-import java.io.PrintStream
-
+import java.io.*
 
 class SettingsScreenActivity : AppCompatActivity() {
 
@@ -28,7 +25,6 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var TCPRadioButton: RadioButton
     private lateinit var UDPRadioButton: RadioButton
     private lateinit var ProtocolChoice: String
-    private val MainCPP = Hping2()
     //private lateinit var btn:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,18 +74,58 @@ class SettingsScreenActivity : AppCompatActivity() {
 //        }))
     }
 
+    fun RunAsRoot(cmd: Array<String>): String {
+        val theRun: String?
+        try {
+            val cmdString = cmd.joinToString(" ", "", "\n")
+
+            val rootShell = Runtime.getRuntime().exec(arrayOf("/system/bin/sh", "-c","su"))
+            val rootShellCommandStream = DataOutputStream(rootShell.outputStream)
+
+            rootShellCommandStream.writeBytes(cmdString)
+            rootShellCommandStream.writeBytes("exit\n")
+            rootShellCommandStream.flush()
+
+            rootShell.waitFor()
+
+            val allOutText = rootShell.inputStream.bufferedReader().use(BufferedReader::readText)
+            val allErrorText = rootShell.errorStream.bufferedReader().use(BufferedReader::readText)
+            val result = StringBuilder()
+            result.append(allOutText)
+            result.append(allErrorText)
+            theRun = result.toString()
+        } catch (e: IOException) {
+            throw RuntimeException(e)
+        } catch (e: InterruptedException) {
+            throw RuntimeException(e)
+        }
+
+        return theRun//return output
+    }
+
     fun startButton(view: View)
     {
         val intent = Intent(this, ScanActivity::class.java).apply{ }
         val ipBundle = Bundle()
-        ipBundle.putString("IPAddress", ipAddress.text.toString())
-        ipBundle.putString("PortNumber", host.text.toString())
-        ipBundle.putString("Protocol", ProtocolChoice)
-        intent.putExtra("IPBundle", ipBundle)
-        var hpingResult = 0
+        //ipBundle.putString("IPAddress", ipAddress.text.toString())
+        //ipBundle.putString("PortNumber", host.text.toString())
+        //ipBundle.putString("Protocol", ProtocolChoice)
+        //intent.putExtra("IPBundle", ipBundle)
 
-        while(hpingResult == 0) {
-            hpingResult = Hping2.invokeHping2(arrayOf("hping2", "192.168.0.17"))//, "--version"))
+        val pm = packageManager
+        try {
+            val rootShell = Runtime.getRuntime().exec("su")
+            val os = DataOutputStream(rootShell.outputStream)
+            val resultReader = rootShell.inputStream.bufferedReader()
+
+            val ai = pm.getApplicationInfo("com.root.hping2", 0)
+            val hping2Executable = "${ai.nativeLibraryDir}/libhping2.so"
+            val result = RunAsRoot(arrayOf(hping2Executable, "8.8.8.8", "-c", "1"))
+            intent.putExtra("IPBundle", result)
+            println(result)
+        } catch (e : PackageManager.NameNotFoundException) {
+            // TODO Auto-generated catch block
+            e.printStackTrace()
         }
 
         startActivity(intent)
