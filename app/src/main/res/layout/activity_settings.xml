@@ -7,9 +7,34 @@
     tools:context=".SettingsScreenActivity">
 
     <EditText
+        android:id="@+id/options"
+        android:layout_width="100dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:clickable="false"
+        android:ems="10"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="@string/Options"
+        android:inputType="none"
+        android:labelFor="@+id/options"
+        android:text="@string/Options"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SettingsLabel"
+        app:layout_constraintVertical_bias="0.292" />
+
+    <EditText
         android:id="@+id/PortNumber"
         android:labelFor="@+id/PortNumber"
-        android:layout_width="175dp"
+        android:layout_width="145dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
@@ -17,7 +42,6 @@
         android:digits="0123456789."
         android:ems="10"
         android:hint="@string/Port"
-        android:autofillHints="@string/Port"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/IPAddress"
@@ -47,16 +71,15 @@
     <EditText
         android:id="@+id/IPAddress"
         android:labelFor="@+id/IPAddress"
-        android:layout_width="169dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
-        android:digits="0123456789."
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="@string/IPAddress"
-        android:autofillHints="@string/IPAddress"
-        android:inputType="phone"
         app:layout_constraintEnd_toStartOf="@+id/PortNumber"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
@@ -67,7 +90,7 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginTop="488dp"
         android:layout_marginEnd="8dp"
         android:text="@string/startButton"
         android:onClick="startButton"
@@ -100,10 +123,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel"
         app:layout_constraintVertical_bias="0.0"
-        android:autofillHints="" />
+        />
 
 
     <RadioGroup
+        android:id="@+id/ProtocolGroup"
         android:layout_width="300dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
@@ -117,17 +141,117 @@
 
         <RadioButton
             android:id="@+id/TCPRadioButton"
-            android:labelFor="@+id/TCPRadioButton"
-            android:layout_width="150dp"
+            android:layout_width="92dp"
             android:layout_height="wrap_content"
+            android:labelFor="@+id/TCPRadioButton"
             android:text="@string/TCP" />
 
         <RadioButton
             android:id="@+id/UDPRadioButton"
-            android:labelFor="@+id/UDPRadioButton"
-            android:layout_width="150dp"
+            android:layout_width="92dp"
             android:layout_height="wrap_content"
+            android:labelFor="@+id/UDPRadioButton"
             android:text="@string/UDP" />
+
+        <RadioButton
+            android:id="@+id/ICMPRadioButton"
+            android:layout_width="92dp"
+            android:layout_height="match_parent"
+            android:labelFor="@+id/ICMPRadioButton"
+            android:text="@string/ICMP" />
     </RadioGroup>
+
+    <EditText
+        android:id="@+id/Count"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/Count"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/options"
+        app:layout_constraintTop_toBottomOf="@+id/options" />
+
+
+    <TextView
+        android:id="@+id/TCPOptions"
+        android:layout_width="100dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/TCPOptions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Count" />
+
+    <CheckBox
+        android:id="@+id/Syn"
+        android:layout_width="62dp"
+        android:layout_height="32dp"
+
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Syn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TCPOptions" />
+
+    <CheckBox
+        android:id="@+id/Fin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Fin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Syn" />
+
+    <CheckBox
+        android:id="@+id/RST"
+        android:layout_width="72dp"
+        android:layout_height="31dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/RST"
+        app:layout_constraintLeft_toLeftOf="@id/Syn"
+        app:layout_constraintTop_toBottomOf="@+id/TCPOptions" />
+
+    <CheckBox
+        android:id="@+id/ACK"
+        android:layout_width="68dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/Ack"
+        app:layout_constraintTop_toBottomOf="@+id/RST"
+        app:layout_constraintLeft_toLeftOf="@id/Fin"
+        app:layout_constraintRight_toRightOf="@id/Push"
+        tools:layout_editor_absoluteX="178dp" />
+
+    <CheckBox
+        android:id="@+id/URG"
+        android:layout_width="62dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Urg"
+        app:layout_constraintBottom_toTopOf="@id/Push"
+        app:layout_constraintLeft_toLeftOf="@id/RST"
+        app:layout_constraintTop_toBottomOf="@+id/TCPOptions" />
+
+    <CheckBox
+        android:id="@+id/Push"
+        android:layout_width="73dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="28dp"
+        android:text="@string/Push"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/URG" />
 
 </android.support.constraint.ConstraintLayout>

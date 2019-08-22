@@ -5,9 +5,19 @@
     <string name="aboutMenuTitle">About</string>
     <string name="scanMenuTitle">Scan</string>
     <string name="startButton">Start</string>
-    <string name="IPAddress">IP Address</string>
+    <string name="IPAddress">IP Address/Website</string>
     <string name="Port">Port Number</string>
     <string name="Protocol">Protocol</string>
     <string name="TCP">TCP</string>
     <string name="UDP">UDP</string>
+    <string name="ICMP">ICMP</string>
+    <string name="Options">Options</string>
+    <string name="Count">Count</string>
+    <string name="TCPOptions">TCP Options</string>
+    <string name="Syn">SYN</string>
+    <string name="Fin">FIN</string>
+    <string name="RST">RST</string>
+    <string name="Push">PUSH</string>
+    <string name="Ack">ACK</string>
+    <string name="Urg">URG</string>
 </resources>

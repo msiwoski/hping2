@@ -6,15 +6,16 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
-import com.root.hping2.R.id.IPAddress
-import com.root.hping2.R.id.PortNumber
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import com.root.hping2.R.id.*
+import org.w3c.dom.Text
 import java.io.*
 
 class SettingsScreenActivity : AppCompatActivity() {
@@ -24,57 +25,81 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var TCPRadioButton: RadioButton
     private lateinit var UDPRadioButton: RadioButton
+    private lateinit var ICMPRadioButton: RadioButton
+    private lateinit var SYNCheckbox: CheckBox
+    private lateinit var ACKCheckbox: CheckBox
+    private lateinit var FINCheckbox: CheckBox
+    private lateinit var RSTCheckbox: CheckBox
+    private lateinit var PUSHCheckbox: CheckBox
+    private lateinit var URGCheckbox: CheckBox
     private lateinit var ProtocolChoice: String
-    //private lateinit var btn:Button
+    private lateinit var packetCount: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        //btn = findViewById<Button>(com.root.hping2.R.id.ScanButton)
-        ipAddress = findViewById<EditText>(IPAddress)
-        host = findViewById<EditText>(PortNumber)
-        //radioGroup = findViewById(ProtocolGroup)
-//        TCPRadioButton = findViewById(R.id.TCPRadioButton)
-//        UDPRadioButton = findViewById(R.id.UDPRadioButton)
-//        //radioGroup.addView(TCPRadioButton)
-        //radioGroup.check(TCPRadioButton.id)
-        ProtocolChoice = "TCP"
-        //radioGroup.addView(UDPRadioButton)
+
+        ipAddress = findViewById(IPAddress)
+        host = findViewById(PortNumber)
+        radioGroup = findViewById(ProtocolGroup)
+        TCPRadioButton = findViewById(R.id.TCPRadioButton)
+        UDPRadioButton = findViewById(R.id.UDPRadioButton)
+        ICMPRadioButton = findViewById(R.id.ICMPRadioButton)
+        radioGroup.check(TCPRadioButton.id)
+        ProtocolChoice = ""
+        packetCount = findViewById(Count)
+        SYNCheckbox = findViewById(Syn)
+        ACKCheckbox = findViewById(ACK)
+        FINCheckbox = findViewById(Fin)
+        RSTCheckbox = findViewById(RST)
+        PUSHCheckbox = findViewById(Push)
+        URGCheckbox = findViewById(URG)
 
 
-        ipAddress.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                ipAddress.setText(s)
-            }
-        })
-
-        host.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                host.setText(s)
-            }
-        })
-
-//        radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
-//            if (i == R.id.TCPRadioButton) {
-//                ProtocolChoice = "TCP"
-//            } else {
-//                ProtocolChoice = "UDP"
+//
+//        ipAddress.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
 //            }
-//        }))
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        })
+//
+//        host.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
+//            }
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        })
+//
+//        packetCount.addTextChangedListener(object: TextWatcher{
+//            override fun afterTextChanged(s: Editable?) {
+//            }
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        })
+
+        radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
+            if (i == R.id.TCPRadioButton) {
+                ProtocolChoice = ""
+            } else if (i == R.id.UDPRadioButton){
+                ProtocolChoice = "-2"
+            } else if (i == R.id.ICMPRadioButton){
+                ProtocolChoice = "-1"
+            }
+        }))
+
     }
 
-    fun RunAsRoot(cmd: Array<String>): String {
+    fun RunAsRoot(cmd: ArrayList<String>): String {
         val theRun: String?
         try {
             val cmdString = cmd.joinToString(" ", "", "\n")
@@ -107,10 +132,7 @@ class SettingsScreenActivity : AppCompatActivity() {
     {
         val intent = Intent(this, ScanActivity::class.java).apply{ }
         val ipBundle = Bundle()
-        //ipBundle.putString("IPAddress", ipAddress.text.toString())
-        //ipBundle.putString("PortNumber", host.text.toString())
-        //ipBundle.putString("Protocol", ProtocolChoice)
-        //intent.putExtra("IPBundle", ipBundle)
+        var commandList: ArrayList<String> = arrayListOf<String>()
 
         val pm = packageManager
         try {
@@ -120,8 +142,52 @@ class SettingsScreenActivity : AppCompatActivity() {
 
             val ai = pm.getApplicationInfo("com.root.hping2", 0)
             val hping2Executable = "${ai.nativeLibraryDir}/libhping2.so"
-            val result = RunAsRoot(arrayOf(hping2Executable, "8.8.8.8", "-c", "1"))
-            intent.putExtra("IPBundle", result)
+
+            commandList.add(hping2Executable)
+
+            if(ProtocolChoice.isNotBlank()){
+                commandList.add(ProtocolChoice)
+            }
+
+
+            if(packetCount.text.isNotEmpty())
+            {
+                commandList.add("-c")
+                commandList.add(packetCount.text.toString())
+            }
+
+            if(ProtocolChoice.equals("")) {
+
+                if (SYNCheckbox.isChecked) {
+                    commandList.add("-S")
+                }
+                if (ACKCheckbox.isChecked) {
+                    commandList.add("-A")
+                }
+                if (FINCheckbox.isChecked) {
+                    commandList.add("-F")
+                }
+                if (RSTCheckbox.isChecked) {
+                    commandList.add("-R")
+                }
+                if (PUSHCheckbox.isChecked) {
+                    commandList.add("-P")
+                }
+                if (URGCheckbox.isChecked) {
+                    commandList.add("-U")
+                }
+            }
+
+            if(ipAddress.text.isNullOrBlank()){
+                commandList.add("8.8.8.8")
+            }else{
+                commandList.add(ipAddress.text.toString())
+            }
+
+
+            val result = RunAsRoot(commandList)
+            ipBundle.putString("IPAddress", result)
+            intent.putExtra("IPBundle", ipBundle)
             println(result)
         } catch (e : PackageManager.NameNotFoundException) {
             // TODO Auto-generated catch block

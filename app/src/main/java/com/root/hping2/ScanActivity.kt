@@ -28,7 +28,7 @@ class ScanActivity : AppCompatActivity() {
         }
         var textView = TextView(this)
         textView.textSize = 40f
-        textView.setText("Ip:" + ipAddress  + " Port:" + portNumber + "Protocol" + protocol)
+        textView.setText(ipAddress )// + " Port:" + portNumber + "Protocol" + protocol)
 
         // Set the text view as the activity layout
         setContentView(textView)
