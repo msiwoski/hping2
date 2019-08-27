@@ -6,7 +6,9 @@
     <string name="scanMenuTitle">Scan</string>
     <string name="startButton">Start</string>
     <string name="IPAddress">IP Address/Website</string>
-    <string name="Port">Port Number</string>
+    <string name="DestPort">Dest Port</string>
+    <string name="IncrementPort">Increment Dest Port</string>
+    <string name="SourcePort">Source Port</string>
     <string name="Protocol">Protocol</string>
     <string name="TCP">TCP</string>
     <string name="UDP">UDP</string>
@@ -20,4 +22,10 @@
     <string name="Push">PUSH</string>
     <string name="Ack">ACK</string>
     <string name="Urg">URG</string>
+    <string name="Xmas">Xmas</string>
+    <string name="Ymas">Ymas</string>
+    <string name="Timestamp">Timestamp</string>
+    <string name="Badcksum">Bad Checksum</string>
+    <string name="Sequence">Sequence Num</string>
+
 </resources>

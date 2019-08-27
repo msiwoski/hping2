@@ -2,26 +2,22 @@ package com.root.hping2
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.support.annotation.RequiresApi
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.widget.*
 import com.root.hping2.R.id.*
-import org.w3c.dom.Text
 import java.io.*
+import javax.xml.transform.Source
 
 class SettingsScreenActivity : AppCompatActivity() {
 
     private lateinit var ipAddress:EditText
-    private lateinit var host:EditText
+    private lateinit var SourcePort:EditText
+    private lateinit var DestPort:EditText
+    private lateinit var IncrementDestPort: CheckBox
+    private lateinit var TCPOptions:TextView
     private lateinit var radioGroup: RadioGroup
     private lateinit var TCPRadioButton: RadioButton
     private lateinit var UDPRadioButton: RadioButton
@@ -32,6 +28,11 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var RSTCheckbox: CheckBox
     private lateinit var PUSHCheckbox: CheckBox
     private lateinit var URGCheckbox: CheckBox
+    private lateinit var XmasCheckbox: CheckBox
+    private lateinit var YmasCheckbox: CheckBox
+    private lateinit var TimestampCheckbox: CheckBox
+    private lateinit var SequenceCheckbox: CheckBox
+    private lateinit var BadcksumCheckbox: CheckBox
     private lateinit var ProtocolChoice: String
     private lateinit var packetCount: EditText
 
@@ -41,8 +42,11 @@ class SettingsScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         ipAddress = findViewById(IPAddress)
-        host = findViewById(PortNumber)
+        SourcePort = findViewById(R.id.SourcePort)
+        DestPort = findViewById(R.id.DestPort)
+        IncrementDestPort = findViewById(IncrementPort)
         radioGroup = findViewById(ProtocolGroup)
+        TCPOptions = findViewById(R.id.TCPOptions)
         TCPRadioButton = findViewById(R.id.TCPRadioButton)
         UDPRadioButton = findViewById(R.id.UDPRadioButton)
         ICMPRadioButton = findViewById(R.id.ICMPRadioButton)
@@ -55,45 +59,64 @@ class SettingsScreenActivity : AppCompatActivity() {
         RSTCheckbox = findViewById(RST)
         PUSHCheckbox = findViewById(Push)
         URGCheckbox = findViewById(URG)
+        XmasCheckbox = findViewById(Xmas)
+        YmasCheckbox = findViewById(Ymas)
+        TimestampCheckbox = findViewById(Timestamp)
+        SequenceCheckbox = findViewById(Sequence)
+        BadcksumCheckbox = findViewById(Badcksum)
 
-
-//
-//        ipAddress.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        })
-//
-//        host.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//            }
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        })
-//
-//        packetCount.addTextChangedListener(object: TextWatcher{
-//            override fun afterTextChanged(s: Editable?) {
-//            }
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        })
 
         radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.TCPRadioButton) {
                 ProtocolChoice = ""
+                SourcePort.visibility = View.VISIBLE
+                DestPort.visibility = View.VISIBLE
+                IncrementDestPort.visibility = View.VISIBLE
+                TCPOptions.visibility = View.VISIBLE
+                SYNCheckbox.visibility = View.VISIBLE
+                SYNCheckbox.visibility = View.VISIBLE
+                ACKCheckbox.visibility = View.VISIBLE
+                FINCheckbox.visibility = View.VISIBLE
+                RSTCheckbox.visibility = View.VISIBLE
+                PUSHCheckbox.visibility = View.VISIBLE
+                URGCheckbox.visibility = View.VISIBLE
+                XmasCheckbox.visibility = View.VISIBLE
+                YmasCheckbox.visibility = View.VISIBLE
+                TimestampCheckbox.visibility = View.VISIBLE
+                SequenceCheckbox.visibility = View.VISIBLE
+                BadcksumCheckbox.visibility = View.VISIBLE
             } else if (i == R.id.UDPRadioButton){
                 ProtocolChoice = "-2"
+                SourcePort.visibility = View.VISIBLE
+                DestPort.visibility = View.VISIBLE
+                IncrementDestPort.visibility = View.VISIBLE
+                TCPOptions.visibility = View.VISIBLE
+                SYNCheckbox.visibility = View.VISIBLE
+                SYNCheckbox.visibility = View.VISIBLE
+                ACKCheckbox.visibility = View.VISIBLE
+                FINCheckbox.visibility = View.VISIBLE
+                RSTCheckbox.visibility = View.VISIBLE
+                PUSHCheckbox.visibility = View.VISIBLE
+                URGCheckbox.visibility = View.VISIBLE
+                XmasCheckbox.visibility = View.VISIBLE
+                YmasCheckbox.visibility = View.VISIBLE
+                TimestampCheckbox.visibility = View.VISIBLE
+                SequenceCheckbox.visibility = View.VISIBLE
+                BadcksumCheckbox.visibility = View.VISIBLE
             } else if (i == R.id.ICMPRadioButton){
                 ProtocolChoice = "-1"
+                TCPOptions.visibility = View.GONE
+                SYNCheckbox.visibility = View.GONE
+                ACKCheckbox.visibility = View.GONE
+                FINCheckbox.visibility = View.GONE
+                RSTCheckbox.visibility = View.GONE
+                PUSHCheckbox.visibility = View.GONE
+                URGCheckbox.visibility = View.GONE
+                XmasCheckbox.visibility = View.GONE
+                YmasCheckbox.visibility = View.GONE
+                TimestampCheckbox.visibility = View.GONE
+                SequenceCheckbox.visibility = View.GONE
+                BadcksumCheckbox.visibility = View.GONE
             }
         }))
 
@@ -149,11 +172,12 @@ class SettingsScreenActivity : AppCompatActivity() {
                 commandList.add(ProtocolChoice)
             }
 
-
             if(packetCount.text.isNotEmpty())
             {
                 commandList.add("-c")
                 commandList.add(packetCount.text.toString())
+            }else{
+                commandList.add("-c 1") //send only 1 packet as default
             }
 
             if(ProtocolChoice.equals("")) {
@@ -176,6 +200,35 @@ class SettingsScreenActivity : AppCompatActivity() {
                 if (URGCheckbox.isChecked) {
                     commandList.add("-U")
                 }
+                if (XmasCheckbox.isChecked) {
+                    commandList.add("-X")
+                }
+                if (YmasCheckbox.isChecked) {
+                    commandList.add("-Y")
+                }
+                if (SequenceCheckbox.isChecked) {
+                    commandList.add("-Q")
+                }
+                if (BadcksumCheckbox.isChecked) {
+                    commandList.add("-b")
+                }
+                if (YmasCheckbox.isChecked) {
+                    commandList.add("--tcp-timestamp")
+                }
+            }
+            if(TCPRadioButton.isSelected || UDPRadioButton.isSelected) {
+                if (SourcePort.text.isNotBlank()){
+                    commandList.add("-s")
+                    commandList.add(SourcePort.text.toString())
+                }
+                if (DestPort.text.isNotBlank()){
+                    commandList.add("-p")
+                    if(IncrementDestPort.isChecked){
+                        commandList.add("+" + DestPort.text.toString())
+                    }else {
+                        commandList.add(DestPort.text.toString())
+                    }
+                }
             }
 
             if(ipAddress.text.isNullOrBlank()){
@@ -184,6 +237,7 @@ class SettingsScreenActivity : AppCompatActivity() {
                 commandList.add(ipAddress.text.toString())
             }
 
+            commandList.add("1>&2") //redirect stdout to stderr
 
             val result = RunAsRoot(commandList)
             ipBundle.putString("IPAddress", result)
