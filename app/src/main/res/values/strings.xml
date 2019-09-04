@@ -7,7 +7,8 @@
     <string name="startButton">Start</string>
     <string name="IPAddress">IP Address/Website</string>
     <string name="DestPort">Dest Port</string>
-    <string name="IncrementPort">Increment Dest Port</string>
+    <string name="IncrementPort">Increment Dest Port by Reply</string>
+    <string name="IncrementPortSent">Increment Dest Port by Sent</string>
     <string name="SourcePort">Source Port</string>
     <string name="Protocol">Protocol</string>
     <string name="TCP">TCP</string>
@@ -27,5 +28,11 @@
     <string name="Timestamp">Timestamp</string>
     <string name="Badcksum">Bad Checksum</string>
     <string name="Sequence">Sequence Num</string>
-
+    <string name="TCPWindowSize">TCP Window Size</string>
+    <string name="TCPSequence">TCP Sequence Number</string>
+    <string name="TCPOffset">Fake TCP data offset</string>
+    <string name="RandSource">Random Source</string>
+    <string name="RandDest">Random Destination</string>
+    <string name="TTL">TTL</string>
+    <string name="Spoof">Spoof hostname</string>
 </resources>

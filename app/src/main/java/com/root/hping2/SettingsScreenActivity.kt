@@ -17,6 +17,7 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var SourcePort:EditText
     private lateinit var DestPort:EditText
     private lateinit var IncrementDestPort: CheckBox
+    private lateinit var IncrementDestPortSent: CheckBox
     private lateinit var TCPOptions:TextView
     private lateinit var radioGroup: RadioGroup
     private lateinit var TCPRadioButton: RadioButton
@@ -35,7 +36,13 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var BadcksumCheckbox: CheckBox
     private lateinit var ProtocolChoice: String
     private lateinit var packetCount: EditText
-
+    private lateinit var TCPWindowSize: EditText
+    private lateinit var TCPSequenceNumber: EditText
+    private lateinit var TCPOffset: EditText
+    private lateinit var RandDest: CheckBox
+    private lateinit var RandSource: CheckBox
+    private lateinit var Spoof: EditText
+    private lateinit var TTL: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,7 @@ class SettingsScreenActivity : AppCompatActivity() {
         SourcePort = findViewById(R.id.SourcePort)
         DestPort = findViewById(R.id.DestPort)
         IncrementDestPort = findViewById(IncrementPort)
+        IncrementDestPortSent = findViewById(IncrementPortSent)
         radioGroup = findViewById(ProtocolGroup)
         TCPOptions = findViewById(R.id.TCPOptions)
         TCPRadioButton = findViewById(R.id.TCPRadioButton)
@@ -64,7 +72,11 @@ class SettingsScreenActivity : AppCompatActivity() {
         TimestampCheckbox = findViewById(Timestamp)
         SequenceCheckbox = findViewById(Sequence)
         BadcksumCheckbox = findViewById(Badcksum)
-
+        TCPWindowSize = findViewById(R.id.TCPWindowSize)
+        TCPSequenceNumber = findViewById(TCPSequence)
+        TCPOffset = findViewById(R.id.TCPOffset)
+        Spoof = findViewById(R.id.Spoof)
+        TTL = findViewById(R.id.TTL)
 
         radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.TCPRadioButton) {
@@ -72,6 +84,7 @@ class SettingsScreenActivity : AppCompatActivity() {
                 SourcePort.visibility = View.VISIBLE
                 DestPort.visibility = View.VISIBLE
                 IncrementDestPort.visibility = View.VISIBLE
+                IncrementDestPortSent.visibility = View.VISIBLE
                 TCPOptions.visibility = View.VISIBLE
                 SYNCheckbox.visibility = View.VISIBLE
                 SYNCheckbox.visibility = View.VISIBLE
@@ -85,11 +98,15 @@ class SettingsScreenActivity : AppCompatActivity() {
                 TimestampCheckbox.visibility = View.VISIBLE
                 SequenceCheckbox.visibility = View.VISIBLE
                 BadcksumCheckbox.visibility = View.VISIBLE
+                TCPWindowSize.visibility = View.VISIBLE
+                TCPSequenceNumber.visibility = View.VISIBLE
+                TCPOffset.visibility = View.VISIBLE
             } else if (i == R.id.UDPRadioButton){
                 ProtocolChoice = "-2"
                 SourcePort.visibility = View.VISIBLE
                 DestPort.visibility = View.VISIBLE
                 IncrementDestPort.visibility = View.VISIBLE
+                IncrementDestPortSent.visibility = View.VISIBLE
                 TCPOptions.visibility = View.VISIBLE
                 SYNCheckbox.visibility = View.VISIBLE
                 SYNCheckbox.visibility = View.VISIBLE
@@ -103,6 +120,9 @@ class SettingsScreenActivity : AppCompatActivity() {
                 TimestampCheckbox.visibility = View.VISIBLE
                 SequenceCheckbox.visibility = View.VISIBLE
                 BadcksumCheckbox.visibility = View.VISIBLE
+                TCPWindowSize.visibility = View.VISIBLE
+                TCPSequenceNumber.visibility = View.VISIBLE
+                TCPOffset.visibility = View.VISIBLE
             } else if (i == R.id.ICMPRadioButton){
                 ProtocolChoice = "-1"
                 TCPOptions.visibility = View.GONE
@@ -117,6 +137,9 @@ class SettingsScreenActivity : AppCompatActivity() {
                 TimestampCheckbox.visibility = View.GONE
                 SequenceCheckbox.visibility = View.GONE
                 BadcksumCheckbox.visibility = View.GONE
+                TCPWindowSize.visibility = View.GONE
+                TCPSequenceNumber.visibility = View.GONE
+                TCPOffset.visibility = View.GONE
             }
         }))
 
@@ -225,11 +248,50 @@ class SettingsScreenActivity : AppCompatActivity() {
                     commandList.add("-p")
                     if(IncrementDestPort.isChecked){
                         commandList.add("+" + DestPort.text.toString())
+                    }else if(IncrementDestPortSent.isChecked){
+                        commandList.add("++" + DestPort.text.toString())
                     }else {
                         commandList.add(DestPort.text.toString())
                     }
                 }
             }
+
+            if(RandDest.isChecked){
+                commandList.add("--rand-dest")
+            }
+            if(RandSource.isChecked){
+                commandList.add("--rand-dest")
+            }
+
+            if(Spoof.text.isNotEmpty())
+            {
+                commandList.add("-a")
+                commandList.add(Spoof.text.toString())
+            }
+
+            if(TTL.text.isNotEmpty())
+            {
+                commandList.add("-t")
+                commandList.add(TTL.text.toString())
+            }
+
+
+            if(TCPWindowSize.text.isNotEmpty())
+            {
+                commandList.add("-w")
+                commandList.add(TCPWindowSize.text.toString())
+            }
+            if(TCPSequenceNumber.text.isNotEmpty())
+            {
+                commandList.add("-M")
+                commandList.add(TCPSequenceNumber.text.toString())
+            }
+            if(TCPOffset.text.isNotEmpty())
+            {
+                commandList.add("-O")
+                commandList.add(TCPOffset.text.toString())
+            }
+
 
             if(ipAddress.text.isNullOrBlank()){
                 commandList.add("8.8.8.8")

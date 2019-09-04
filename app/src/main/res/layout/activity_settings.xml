@@ -18,6 +18,7 @@
         android:hint="@string/DestPort"
         android:inputType="phone"
         android:labelFor="@+id/SourcePort"
+        android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/IPAddress"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
 
@@ -41,10 +42,9 @@
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintVertical_bias="0.188" />
 
     <EditText
         android:id="@+id/SourcePort"
@@ -60,6 +60,7 @@
         android:hint="@string/SourcePort"
         android:inputType="phone"
         android:labelFor="@+id/SourcePort"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/DestPort"
@@ -97,20 +98,22 @@
         android:ems="10"
         android:hint="@string/IPAddress"
         android:labelFor="@+id/IPAddress"
+        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
 
     <Button
         android:id="@+id/startButton"
-        android:labelFor="@+id/startButton"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="488dp"
+        android:layout_marginTop="780dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/startButton"
+        android:labelFor="@+id/startButton"
         android:onClick="startButton"
+        android:text="@string/startButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
 
@@ -146,11 +149,12 @@
         android:layout_width="300dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Protocol">
 
@@ -181,11 +185,12 @@
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="140dp"
+        android:layout_marginRight="140dp"
         android:ems="10"
         android:hint="@string/Count"
         android:inputType="number"
+        android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/options"
         app:layout_constraintTop_toBottomOf="@+id/options" />
 
@@ -196,11 +201,12 @@
         android:layout_height="17dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/TCPOptions"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Count" />
 
@@ -282,9 +288,9 @@
         android:id="@+id/Xmas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
         android:text="@string/Xmas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TCPOptions" />
@@ -293,9 +299,9 @@
         android:id="@+id/Ymas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="108dp"
+        android:layout_marginRight="108dp"
         android:text="@string/Ymas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Xmas" />
@@ -306,11 +312,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/Sequence"
         app:layout_constraintEnd_toStartOf="@+id/Badcksum"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Fin" />
 
@@ -318,9 +325,9 @@
         android:id="@+id/Badcksum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:text="@string/Badcksum"
         app:layout_constraintEnd_toStartOf="@+id/Timestamp"
         app:layout_constraintTop_toBottomOf="@+id/Push" />
@@ -329,17 +336,17 @@
         android:id="@+id/Timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
         android:text="@string/Timestamp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ymas" />
 
     <CheckBox
         android:id="@+id/IncrementPort"
-        android:layout_width="175dp"
-        android:layout_height="26dp"
+        android:layout_width="228dp"
+        android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -349,7 +356,114 @@
         android:text="@string/IncrementPort"
         app:layout_constraintBottom_toTopOf="@+id/Protocol"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DestPort" />
+        app:layout_constraintTop_toBottomOf="@+id/DestPort"
+        app:layout_constraintVertical_bias="0.363" />
+
+    <CheckBox
+        android:id="@+id/IncrementPortSent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/IncrementPortSent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/IncrementPort"
+        app:layout_constraintTop_toBottomOf="@+id/SourcePort" />
+
+    <EditText
+        android:id="@+id/TCPWindowSize"
+        android:layout_width="103dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/TCPWindowSize"
+        android:inputType="number"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Sequence" />
+
+    <EditText
+        android:id="@+id/TCPSequence"
+        android:layout_width="115dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="@string/TCPSequence"
+        android:inputType="number"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/TCPWindowSize"
+        app:layout_constraintTop_toBottomOf="@+id/Badcksum" />
+
+    <EditText
+        android:id="@+id/TCPOffset"
+        android:layout_width="109dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/TCPOffset"
+        android:inputType="number"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/TCPSequence"
+        app:layout_constraintTop_toBottomOf="@+id/Timestamp" />
+
+    <CheckBox
+        android:id="@+id/RandDest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/RandDest"
+        app:layout_constraintTop_toBottomOf="@+id/Count"
+        tools:layout_editor_absoluteX="26dp" />
+
+    <CheckBox
+        android:id="@+id/RandSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/RandSource"
+        app:layout_constraintTop_toBottomOf="@+id/RandDest"
+        tools:layout_editor_absoluteX="27dp" />
+
+    <EditText
+        android:id="@+id/Spoof"
+        android:layout_width="223dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/Spoof"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/Count"
+        app:layout_constraintTop_toBottomOf="@+id/options" />
+
+    <EditText
+        android:id="@+id/TTL"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/TTL"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/Spoof"
+        app:layout_constraintTop_toBottomOf="@+id/options" />
 
 </android.support.constraint.ConstraintLayout>
