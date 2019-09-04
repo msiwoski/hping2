@@ -39,10 +39,14 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var TCPWindowSize: EditText
     private lateinit var TCPSequenceNumber: EditText
     private lateinit var TCPOffset: EditText
-    private lateinit var RandDest: CheckBox
-    private lateinit var RandSource: CheckBox
     private lateinit var Spoof: EditText
     private lateinit var TTL: EditText
+    private lateinit var Frag: CheckBox
+    private lateinit var DontFrag: CheckBox
+    private lateinit var MoreFrag: CheckBox
+    private lateinit var RecordRoute: CheckBox
+    private lateinit var FragmentOffset: EditText
+    private lateinit var MTU: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +81,12 @@ class SettingsScreenActivity : AppCompatActivity() {
         TCPOffset = findViewById(R.id.TCPOffset)
         Spoof = findViewById(R.id.Spoof)
         TTL = findViewById(R.id.TTL)
+        Frag = findViewById(R.id.Frag)
+        DontFrag = findViewById(R.id.DontFrag)
+        MoreFrag = findViewById(R.id.MoreFrag)
+        RecordRoute = findViewById(R.id.RecordRoute)
+        FragmentOffset = findViewById(R.id.FragmentOffset)
+        MTU = findViewById(R.id.MTU)
 
         radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.TCPRadioButton) {
@@ -256,13 +266,6 @@ class SettingsScreenActivity : AppCompatActivity() {
                 }
             }
 
-            if(RandDest.isChecked){
-                commandList.add("--rand-dest")
-            }
-            if(RandSource.isChecked){
-                commandList.add("--rand-dest")
-            }
-
             if(Spoof.text.isNotEmpty())
             {
                 commandList.add("-a")
@@ -274,7 +277,28 @@ class SettingsScreenActivity : AppCompatActivity() {
                 commandList.add("-t")
                 commandList.add(TTL.text.toString())
             }
-
+            if(Frag.isChecked){
+                commandList.add("-f")
+            }
+            if(DontFrag.isChecked){
+                commandList.add("-x")
+            }
+            if(MoreFrag.isChecked){
+                commandList.add("-y")
+            }
+            if(RecordRoute.isChecked){
+                commandList.add("-G")
+            }
+            if(FragmentOffset.text.isNotEmpty())
+            {
+                commandList.add("-g")
+                commandList.add(FragmentOffset.text.toString())
+            }
+            if(MTU.text.isNotEmpty())
+            {
+                commandList.add("-m")
+                commandList.add(MTU.text.toString())
+            }
 
             if(TCPWindowSize.text.isNotEmpty())
             {

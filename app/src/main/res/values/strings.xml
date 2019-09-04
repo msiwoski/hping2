@@ -35,4 +35,10 @@
     <string name="RandDest">Random Destination</string>
     <string name="TTL">TTL</string>
     <string name="Spoof">Spoof hostname</string>
+    <string name="Frag">Frag</string>
+    <string name="DontFrag">Don\'t Frag</string>
+    <string name="MoreFrag">More Frag</string>
+    <string name="RecordRoute">Record Route</string>
+    <string name="FragmentOffset">Fragment Offset</string>
+    <string name="MTU">MTU Value</string>
 </resources>
