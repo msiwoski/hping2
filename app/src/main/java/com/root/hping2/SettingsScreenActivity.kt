@@ -249,7 +249,7 @@ class SettingsScreenActivity : AppCompatActivity() {
                     commandList.add("--tcp-timestamp")
                 }
             }
-            if(TCPRadioButton.isSelected || UDPRadioButton.isSelected) {
+            if(TCPRadioButton.isChecked || UDPRadioButton.isChecked) {
                 if (SourcePort.text.isNotBlank()){
                     commandList.add("-s")
                     commandList.add(SourcePort.text.toString())
