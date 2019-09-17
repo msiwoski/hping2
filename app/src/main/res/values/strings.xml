@@ -41,4 +41,5 @@
     <string name="RecordRoute">Record Route</string>
     <string name="FragmentOffset">Fragment Offset</string>
     <string name="MTU">MTU Value</string>
+    <string name="Interval">Interval</string>
 </resources>

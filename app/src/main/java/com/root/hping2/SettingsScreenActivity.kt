@@ -9,7 +9,6 @@ import android.content.pm.PackageManager
 import android.widget.*
 import com.root.hping2.R.id.*
 import java.io.*
-import javax.xml.transform.Source
 
 class SettingsScreenActivity : AppCompatActivity() {
 
@@ -47,6 +46,8 @@ class SettingsScreenActivity : AppCompatActivity() {
     private lateinit var RecordRoute: CheckBox
     private lateinit var FragmentOffset: EditText
     private lateinit var MTU: EditText
+    private lateinit var Interval: EditText
+    private lateinit var RandSource: CheckBox
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,8 +86,11 @@ class SettingsScreenActivity : AppCompatActivity() {
         DontFrag = findViewById(R.id.DontFrag)
         MoreFrag = findViewById(R.id.MoreFrag)
         RecordRoute = findViewById(R.id.RecordRoute)
-        FragmentOffset = findViewById(R.id.FragmentOffset)
+        FragmentOffset = findViewById(fragmentOffset)
         MTU = findViewById(R.id.MTU)
+        Interval = findViewById(R.id.Interval)
+
+        RandSource = findViewById(R.id.RandSource)
 
         radioGroup.setOnCheckedChangeListener((RadioGroup.OnCheckedChangeListener { radioGroup, i ->
             if (i == R.id.TCPRadioButton) {
@@ -264,6 +268,15 @@ class SettingsScreenActivity : AppCompatActivity() {
                         commandList.add(DestPort.text.toString())
                     }
                 }
+            }
+            if(Interval.text.isNotEmpty()){
+                commandList.add("-i")
+                commandList.add(Interval.text.toString())
+            }
+
+
+            if(RandSource.isChecked){
+                commandList.add("--rand-source")
             }
 
             if(Spoof.text.isNotEmpty())

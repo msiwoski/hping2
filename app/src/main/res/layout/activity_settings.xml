@@ -7,6 +7,34 @@
     tools:context=".SettingsScreenActivity">
 
     <EditText
+        android:id="@+id/Interval"
+        android:layout_width="119dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="@string/Interval"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/RecordRoute"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentOffset" />
+
+    <EditText
+        android:id="@+id/fragmentOffset"
+        android:layout_width="119dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="@string/FragmentOffset"
+        android:inputType="number"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/DontFrag"
+        app:layout_constraintTop_toBottomOf="@+id/TTL" />
+
+    <EditText
         android:id="@+id/DestPort"
         android:layout_width="96dp"
         android:layout_height="48dp"
@@ -18,7 +46,7 @@
         android:hint="@string/DestPort"
         android:inputType="phone"
         android:labelFor="@+id/SourcePort"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/IPAddress"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
 
@@ -58,7 +86,7 @@
         android:hint="@string/SourcePort"
         android:inputType="phone"
         android:labelFor="@+id/SourcePort"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/DestPort"
@@ -94,10 +122,10 @@
         android:layout_marginLeft="104dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:focusable="true"
         android:hint="@string/IPAddress"
         android:labelFor="@+id/IPAddress"
-        android:textSize="10sp"
-        android:focusable="true"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SettingsLabel" />
 
@@ -187,7 +215,7 @@
         android:ems="10"
         android:hint="@string/Count"
         android:inputType="number"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/options"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -369,45 +397,45 @@
 
     <EditText
         android:id="@+id/TCPWindowSize"
-        android:layout_width="103dp"
-        android:layout_height="34dp"
+        android:layout_width="124dp"
+        android:layout_height="48dp"
         android:layout_marginStart="52dp"
         android:layout_marginLeft="52dp"
         android:ems="10"
         android:hint="@string/TCPWindowSize"
         android:inputType="number"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Sequence" />
 
     <EditText
         android:id="@+id/TCPSequence"
-        android:layout_width="115dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_width="142dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginLeft="76dp"
         android:ems="10"
         android:hint="@string/TCPSequence"
         android:inputType="number"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/TCPWindowSize"
         app:layout_constraintTop_toBottomOf="@+id/Badcksum" />
 
     <EditText
         android:id="@+id/TCPOffset"
-        android:layout_width="109dp"
-        android:layout_height="37dp"
+        android:layout_width="154dp"
+        android:layout_height="39dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="@string/TCPOffset"
         android:inputType="number"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintHorizontal_bias="0.688"
         app:layout_constraintStart_toEndOf="@+id/TCPSequence"
         app:layout_constraintTop_toBottomOf="@+id/Timestamp" />
 
@@ -417,9 +445,9 @@
         android:layout_height="48dp"
         android:layout_marginTop="4dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/Spoof"
-        android:textSize="10sp"
+        android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/Count"
         app:layout_constraintTop_toBottomOf="@+id/options" />
 
@@ -431,9 +459,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/TTL"
-        android:textSize="10sp"
+        android:inputType="textPersonName"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/Spoof"
         app:layout_constraintTop_toBottomOf="@+id/options" />
 
@@ -441,9 +469,9 @@
         android:id="@+id/Frag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="24dp"
         android:text="@string/Frag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Spoof" />
@@ -452,9 +480,9 @@
         android:id="@+id/MoreFrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginLeft="96dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="16dp"
         android:text="@string/MoreFrag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Frag" />
@@ -463,9 +491,9 @@
         android:id="@+id/DontFrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/DontFrag"
         app:layout_constraintStart_toEndOf="@+id/Frag"
         app:layout_constraintTop_toBottomOf="@+id/TTL" />
@@ -474,9 +502,9 @@
         android:id="@+id/RecordRoute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/RecordRoute"
         app:layout_constraintStart_toEndOf="@+id/MoreFrag"
         app:layout_constraintTop_toBottomOf="@+id/DontFrag" />
@@ -491,22 +519,20 @@
         android:ems="10"
         android:hint="@string/MTU"
         android:inputType="number"
-        android:textSize="10sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/TTL"
         app:layout_constraintTop_toBottomOf="@+id/options" />
 
-    <EditText
-        android:id="@+id/FragmentOffset"
-        android:layout_width="119dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="@string/FragmentOffset"
-        android:inputType="number"
-        android:textSize="10sp"
-        app:layout_constraintStart_toEndOf="@+id/DontFrag"
+    <CheckBox
+        android:id="@+id/RandSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/RandSource"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/fragmentOffset"
         app:layout_constraintTop_toBottomOf="@+id/MTU" />
 
 </android.support.constraint.ConstraintLayout>
